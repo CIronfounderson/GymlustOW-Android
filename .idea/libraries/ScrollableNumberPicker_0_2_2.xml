@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="ScrollableNumberPicker-0.2.2">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.android/build-cache/17c665cdb7be7437ed3c8f44ede43bccad520af8/output/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.android/build-cache/17c665cdb7be7437ed3c8f44ede43bccad520af8/output/res" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.michaelmuenzer.android/ScrollableNumberPicker/0.2.2/58c1d61f137bfdeaaba6e5314844bfb68b10b232/ScrollableNumberPicker-0.2.2-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

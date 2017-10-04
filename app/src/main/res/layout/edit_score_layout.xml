@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/activity_horizontal_margin"
+    android:orientation="horizontal">
+
+    <TextView
+        android:id="@+id/score_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical|end"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_weight="0.5"
+        android:text="@string/d_score_label"
+        android:textAlignment="gravity"
+        android:textSize="24sp" />
+
+    <com.michaelmuenzer.android.scrollablennumberpicker.ScrollableNumberPicker
+        android:id="@+id/score_points"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        app:snp_buttonIconDown="@drawable/arrow_down_bold_circle_outline"
+        app:snp_buttonIconUp="@drawable/arrow_up_bold_circle_outline"
+        app:snp_maxValue="10"
+        app:snp_minValue="0"
+        app:snp_orientation="vertical"
+        app:snp_stepSize="1"
+        app:snp_value="9"
+        app:snp_value_text_size="24sp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_weight="1"
+        android:text="@string/decimal_separator"
+        android:textAlignment="center"
+        android:textSize="24sp" />
+
+    <com.michaelmuenzer.android.scrollablennumberpicker.ScrollableNumberPicker
+        android:id="@+id/score_decimals"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        app:snp_buttonIconDown="@drawable/arrow_down_bold_circle_outline"
+        app:snp_buttonIconUp="@drawable/arrow_up_bold_circle_outline"
+        app:snp_maxValue="95"
+        app:snp_minValue="0"
+        app:snp_orientation="vertical"
+        app:snp_stepSize="05"
+        app:snp_value="05"
+        app:snp_value_text_size="24sp" />
+</LinearLayout>

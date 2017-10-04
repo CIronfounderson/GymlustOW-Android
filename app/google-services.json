@@ -1,0 +1,62 @@
+{
+  "project_info": {
+    "project_number": "729182853725",
+    "firebase_url": "https://gymlust-572f8.firebaseio.com",
+    "project_id": "gymlust-572f8",
+    "storage_bucket": "gymlust-572f8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:729182853725:android:42fe07042b21af91",
+        "android_client_info": {
+          "package_name": "nl.kolossus.gymlust"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "729182853725-fm2n6hhhd4i2covsu331ng4ii361s0g3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "nl.kolossus.gymlust",
+            "certificate_hash": "60c687819621e2ae477208f95ff685b86fe7eba3"
+          }
+        },
+        {
+          "client_id": "729182853725-8o03fo47c1r5al5950r2u7fcpqcr73u7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAseajdWUDTxEz55_nl8h0YcRtBq-brfaI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "729182853725-gu1f1g39k7ii1ii2cs5ak80k9f83q2qd.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "nl.kolossus.gymlust"
+              }
+            },
+            {
+              "client_id": "729182853725-8o03fo47c1r5al5950r2u7fcpqcr73u7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
