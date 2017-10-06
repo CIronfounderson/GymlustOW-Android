@@ -34,4 +34,5 @@
     <string name="d_header">D</string>
     <string name="e_header">E</string>
     <string name="n_header">N</string>
+    <string name="bg">bg</string>
 </resources>

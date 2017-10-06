@@ -21,14 +21,18 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Locale;
 
 import nl.kolossus.gymlust.model.Match;
 import nl.kolossus.gymlust.model.MatchObject;
 import nl.kolossus.gymlust.model.ParticipantStatus;
+import nl.kolossus.gymlust.model.SortOrder;
+import nl.kolossus.gymlust.model.Tournament;
 
 public class MainActivity extends AppCompatActivity {
-    private ArrayList<Match> mArraylistMatches;
+    private Tournament tournament;
     private AppUser mAppUser;
 
     static final int REFEREE_LOGIN = 1;
@@ -51,23 +55,22 @@ public class MainActivity extends AppCompatActivity {
                 | View.SYSTEM_UI_FLAG_FULLSCREEN;
         decorView.setSystemUiVisibility(uiOptions);
 
-        mArraylistMatches = new ArrayList<>();
-        mArraylistMatches.clear();
+        tournament = new Tournament("ow2017");
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("ow2017");
+        DatabaseReference myRef = database.getReference(tournament.getName());
 
 //        HeaderListView list = new HeaderListView(this);
         HeaderListView list = (HeaderListView) findViewById(R.id.main_list_view);
         final SectionAdapter listAdapter = new SectionAdapter() {
             @Override
             public int numberOfSections() {
-                return mArraylistMatches.size();
+                return tournament.matches.size();
             }
 
             @Override
             public int numberOfRows(int section) {
-                return mArraylistMatches.get(section).participants.size();
+                return tournament.matches.get(section).participants.size();
             }
 
             @Override
@@ -81,16 +84,16 @@ public class MainActivity extends AppCompatActivity {
                     convertView = getLayoutInflater().inflate(getResources().getLayout(R.layout.member_row), null);
                 }
                 ImageView ivLight = (ImageView) convertView.findViewById(R.id.ivLight);
-                if(mArraylistMatches.get(section).participants.get(row).getStatus()==ParticipantStatus.Free){
+                if(tournament.matches.get(section).participants.get(row).getStatus()==ParticipantStatus.Free){
                     ivLight.setVisibility(View.INVISIBLE);
                 } else {
                     ivLight.setVisibility(View.VISIBLE);
                 }
                 TextView tvName = (TextView) convertView.findViewById(R.id.member_name);
-                tvName.setText(mArraylistMatches.get(section).participants.get(row).getName());
+                tvName.setText(tournament.matches.get(section).participants.get(row).getName());
 
                 TextView tvTotal = (TextView) convertView.findViewById(R.id.member_total);
-                tvTotal.setText(String.format(Locale.getDefault(), "%.3f", mArraylistMatches.get(section).participants.get(row).getScore()));
+                tvTotal.setText(String.format(Locale.getDefault(), "%.3f", tournament.matches.get(section).participants.get(row).getScore()));
                 return convertView;
             }
 
@@ -100,13 +103,13 @@ public class MainActivity extends AppCompatActivity {
             }
 
             public void onRowItemClick(AdapterView<?> parent, View view, int section, int row, long id) {
-                if(mAppUser.isReferee() && (mArraylistMatches.get(section).participants.get(row).getStatus()== ParticipantStatus.Free)){
+                if(mAppUser.isReferee() && (tournament.matches.get(section).participants.get(row).getStatus()== ParticipantStatus.Free)){
                     Intent intent = new Intent(getBaseContext(), EditActivity.class);
-                    intent.putExtra("MemberId", mArraylistMatches.get(section).participants.get(row).getId());
+                    intent.putExtra("MemberId", tournament.matches.get(section).participants.get(row).getId());
                     startActivity(intent);
                 } else {
                     Intent intent = new Intent(getBaseContext(), MemberActivity.class);
-                    intent.putExtra("MemberId", mArraylistMatches.get(section).participants.get(row).getId());
+                    intent.putExtra("MemberId", tournament.matches.get(section).participants.get(row).getId());
                     startActivity(intent);
                 }
             }
@@ -118,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 convertView.setBackgroundColor(ContextCompat.getColor(getBaseContext(), R.color.holo_blue_light));
                 TextView tv = (TextView) convertView.findViewById(R.id.section_header);
-                tv.setText(mArraylistMatches.get(section).getName());
+                tv.setText(tournament.matches.get(section).getName());
                 return convertView;
             }
         };
@@ -127,23 +130,23 @@ public class MainActivity extends AppCompatActivity {
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                mArraylistMatches.clear();
+                tournament.matches.clear();
                 for (DataSnapshot child : dataSnapshot.getChildren()) {
                     MatchObject matchObj = child.getValue(MatchObject.class);
                     matchObj.setId(child.getKey());
                     Match match = matchObj.toMatch();
                     boolean isMatchFound = false;
-                    for (Match m : mArraylistMatches) {
+                    for (Match m : tournament.matches) {
                         if (m.getName().equals(match.getName())) {
                             m.participants.add(match.participants.get(0));
                             isMatchFound = true;
                         }
                     }
                     if (!isMatchFound) {
-                        mArraylistMatches.add(match);
+                        tournament.matches.add(match);
                     }
                 }
-//                mArraylistMatches.sort();
+                tournament.rearrange(SortOrder.StartOrder);
                 listAdapter.notifyDataSetChanged();
             }
 

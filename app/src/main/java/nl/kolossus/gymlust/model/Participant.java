@@ -1,15 +1,16 @@
 package nl.kolossus.gymlust.model;
 
+import android.support.annotation.NonNull;
+
 import com.google.firebase.database.DatabaseReference;
 
 import java.util.Locale;
 
 /**
  * Created by Eric de Haan on 21-07-17.
- *
  */
 
-public class Participant {
+public class Participant implements Comparable<Participant> {
     private String id = "";
     private String name = "";
     private String level = "";
@@ -21,6 +22,7 @@ public class Participant {
     private Score vault2Score = new Score(0, 0, 0);
     private Score ponyScore = new Score(0, 0, 0);
     private float score = 0.0f;
+    private boolean champion = false;
     private ParticipantStatus status = ParticipantStatus.Free;
 
     public Participant() {
@@ -38,6 +40,7 @@ public class Participant {
         this.vault1Score = new Score();
         this.vault2Score = new Score();
         this.score = 0;
+        this.champion = false;
         this.status = ParticipantStatus.Free;
     }
 
@@ -53,9 +56,13 @@ public class Participant {
         return level;
     }
 
-    public String getStartSequence() { return startSequence; }
+    public String getStartSequence() {
+        return startSequence;
+    }
 
-    public String getResultSequence() { return resultSequence; }
+    public String getResultSequence() {
+        return resultSequence;
+    }
 
     public Score getBeamScore() {
         return beamScore;
@@ -81,6 +88,10 @@ public class Participant {
         return score;
     }
 
+    public Boolean isChampion() {
+        return champion;
+    }
+
     public ParticipantStatus getStatus() {
         return status;
     }
@@ -97,9 +108,17 @@ public class Participant {
         level = value;
     }
 
-    public void setStartSequence(String value) { startSequence = value; }
+    public void setStartSequence(String value) {
+        startSequence = value;
+    }
 
-    public void setResultSequence(String value) { resultSequence = value; }
+    public void setResultSequence(String value) {
+        resultSequence = value;
+    }
+
+    public void setChampion(Boolean value) {
+        champion = value;
+    }
 
     public void setBeamScore(Score value) {
         beamScore = value;
@@ -136,13 +155,17 @@ public class Participant {
 
     private void setScore() {
         score = beamScore.total + floorScore.total + ponyScore.total + ((vault1Score.total + vault2Score.total) / 2);
-        String result = startSequence.substring(0, 3) + String.format(Locale.getDefault(), "%05d", 99999 - (int)(score * 1000));
+        String result = startSequence.substring(0, 3) + String.format(Locale.getDefault(), "%05d", 99999 - (int) (score * 1000));
         setResultSequence(result);
     }
 
     public void save(DatabaseReference dbRef) {
         ParticipantObject participantObject = new ParticipantObject(this);
         dbRef.setValue(participantObject);
+    }
+
+    public int compareTo(@NonNull Participant p) {
+        return resultSequence.compareTo(p.getResultSequence());
     }
 }
 
